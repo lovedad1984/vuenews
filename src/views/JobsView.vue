@@ -1,26 +1,17 @@
 <template>
-    <div>
-        <div v-for="job in jobs" v-bind:key="job.id">{{ job.title }}</div>
-    </div>
+  <div>
+    <list-item></list-item>
+  </div>
 </template>
 
 <script>
-import { fetchJobsList } from '../api/index.js';
-
+import ListItem from '../components/ListItem.vue';
 export default {
-    data() {
-        return {
-            jobs: []
-        }
-    },
-    created() {
-        fetchJobsList()
-            .then(response => { this.jobs = response.data })
-            .catch(error => console.log(error));
-    }
-}
+  components: {
+    ListItem,
+  },
+  created() {
+    this.$store.dispatch('FETCH_JOBS')
+  }
+};
 </script>
-
-<style>
-
-</style>

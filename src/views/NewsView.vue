@@ -1,28 +1,27 @@
 <template>
-    <div>
-        <div v-for="user in this.$store.state.news" v-bind:key="user.id">{{ user.title }}</div>
-    </div>
+  <div>
+    <list-item></list-item>
+  </div>
 </template>
 
 <script>
-import { fetchNewsList } from '../api/index.js';
-
+import ListItem from "../components/ListItem.vue";
+import bus from "../utils/bus.js";
 export default {
-    created() {
-        this.$store.dispatch('FETCH_NEWS');
-        // axios.get('https://api.hnpwa.com/v0/news/1.json')
-        // .then(response => this.users = response.data)
-        // fetchNewsList()
-        // .then(response => {
-        //     this.users = response.data;
-        // })
-        // .catch(function(error) {
-        //     console.log(error);
-        // })
-    }
-}
+  components: {
+    ListItem,
+  },
+  created() {
+    bus.$emit("start:spinner");
+    this.$store
+      .dispatch("FETCH_NEWS")
+      .then(() => {
+        console.log("fetched");
+        bus.$emit("end:spinner");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
 </script>
-
-<style>
-
-</style>
