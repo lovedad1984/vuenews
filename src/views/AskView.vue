@@ -5,13 +5,16 @@
 </template>
 
 <script>
-import ListItem from '../components/ListItem.vue';
+import ListItem from "../components/ListItem.vue";
+// import bus from "../utils/bus.js";
+import ListMixin from "../mixins/ListMixin.js";
 export default {
   components: {
     ListItem,
   },
-  created() {
-    this.$store.dispatch('FETCH_ASKS')
-  }
+  // mounted() {
+  //   bus.$emit("end:spinner");
+  // }
+  mixins: [ListMixin],
 };
 </script>
